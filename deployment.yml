@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-testgo-deployment
+  labels:
+    app: dev-testgo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-testgo-pod
+  template:
+    metadata:
+      labels:
+        app: dev-testgo-pod
+    spec:
+      containers:
+      - name: dev-testgo
+        image: neil605164/golang-hello:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: nginx-port
