@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: neiltest-virtualservice
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - neiltest-gateway
+  http:
+  ##### 條件一: 百分百到 v1 #####
+  - name: another-route-with-condition
+    match:
+    - uri:
+        exact: /hello
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: dev-testgo-service
+        subset: v2
+  ##### 全域條件:  #####
+  - name: global-route
+    route:
+    - destination:
+        host: dev-testgo-service # 一定需要對應 service name
+        subset: v1
