@@ -8,7 +8,7 @@ spec:
   gateways:
   - neiltest-gateway
   http:
-  ##### 條件一: 百分百到 v1 #####
+  ##### 條件一: 百分百到 v2 #####
   - name: another-route-with-condition
     match:
     - uri:
@@ -19,9 +19,8 @@ spec:
     - destination:
         host: dev-testgo-service
         subset: v2
-  ##### 全域條件:  #####
+  ##### 全域條件: v1 v2 隨機到  #####
   - name: global-route
     route:
     - destination:
         host: dev-testgo-service # 一定需要對應 service name
-        subset: v1
