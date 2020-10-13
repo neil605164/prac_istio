@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-testgo-service
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    name: dev-testgo
+    targetPort: nginx-port
+  selector:
+    app: dev-testgo-pod
