@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-testgo-deployment-v1
+  labels:
+    app: dev-testgo-deployment-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-testgo-pod
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: dev-testgo-pod
+        version: v1
+    spec:
+      containers:
+      - name: dev-testgo
+        image: neil605164/hello-go:v0.0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: nginx-port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-testgo-deployment-v2
+  labels:
+    app: dev-testgo-deployment-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-testgo-pod
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: dev-testgo-pod
+        version: v2
+    spec:
+      containers:
+      - name: dev-testgo
+        image: neil605164/hello-go:v0.0.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: nginx-port
