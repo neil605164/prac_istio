@@ -15,6 +15,7 @@ spec:
         host: dev-testgo-service # 一定需要對應 service name
         subset: v1
       weight: 100
+    ##### 鏡像處理 #####
     mirror:
       host: dev-testgo-service # 一定需要對應 service name
       subset: v2
