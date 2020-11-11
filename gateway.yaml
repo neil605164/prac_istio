@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: hello-go-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: hTTP
+      hosts:
+        - "golang.example.com" # allow url
+      tls:
+        httpsRedirect: true # sends 301 redirect for http requests
+    - port:
+        number: 443
+        name: https
+        protocol: hTTPS
+      hosts:
+        - "golang.example.com" # allow url
+      tls:
+        mode: SIMPLE
+        credentialName: golang-credential # must be the same as secret

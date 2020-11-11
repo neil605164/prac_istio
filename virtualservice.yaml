@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: neiltest-virtualservice
+spec:
+  hosts:
+  - "*" # 指定只限該網址可以進入服務
+  gateways:
+  - hello-go-gateway
+  http:
+  ##### 規則一 #####
+  - name: hello-path
+    match:
+    - uri:
+        exact: "/hello" # 絕對批配，禁止該範例: /hello/abc
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: dev-testgo-service # 一定需要對應 service name
+        subset: v1
+      weight: 75
+    - destination:
+        host: dev-testgo-service # 一定需要對應 service name
+        subset: v2
+      weight: 25
+  ##### 規則二 #####
+  - name: api-path-with-rewrite
+    match:
+    - uri: 
+        prefix: /api
+        # ignoreUriCase: true # 對 /api path 設定忽略大小寫規則，因此批配: /API, /APi, /aPi ....
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: dev-testgo-service # 一定需要對應 service name
+        subset: v1
+      weight: 75
+    - destination:
+        host: dev-testgo-service # 一定需要對應 service name
+        subset: v2
+      weight: 25
